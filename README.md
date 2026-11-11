@@ -133,7 +133,11 @@ The acceptance script generates a 10-minute test video, starts the production we
 
 A note on Test 3 in the original brief: it expected the final clip to hold 30 seconds. Thirteen 45-second clips take 585 seconds, so the 14th clip is 15 seconds long. The app produces 15 seconds, and the test checks for that.
 
-Mobile layouts (Test 7) were checked in a headless browser at phone width; see the screenshots in the pull request or run the app and resize.
+Test 7 (mobile) is covered by `scripts/ui-check.mjs`, which opens every main page in Chromium as an iPhone 13, an iPad Mini and a 1440 px desktop, fails on horizontal scrolling or console errors, and saves full-page screenshots. It needs Playwright (`npm i -D playwright`) and a running app:
+
+```bash
+node scripts/ui-check.mjs http://localhost:3000 you@example.com your-password ./test-output/shots
+```
 
 ## Environment variables
 

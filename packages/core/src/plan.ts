@@ -131,7 +131,7 @@ export function formatDuration(sec: number): string {
   const s = Math.round(sec % 60);
   if (m < 60) return s ? `${m}m ${s}s` : `${m}m`;
   const h = Math.floor(m / 60);
-  return `${h}h ${m % 60}m`;
+  return m % 60 ? `${h}h ${m % 60}m` : `${h}h`;
 }
 
 // ---------- output geometry ----------
