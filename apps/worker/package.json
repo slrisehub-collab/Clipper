@@ -1,0 +1,19 @@
+{
+  "name": "@clipforge/worker",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch --env-file-if-exists=../../.env src/index.ts",
+    "start": "tsx --env-file-if-exists=../../.env src/index.ts"
+  },
+  "dependencies": {
+    "@clipforge/core": "*",
+    "archiver": "7.0.1",
+    "bullmq": "5.34.0",
+    "tsx": "4.19.2"
+  },
+  "devDependencies": {
+    "@types/archiver": "6.0.3"
+  }
+}

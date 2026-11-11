@@ -1,0 +1,35 @@
+{
+  "name": "clipforge",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace @clipforge/web",
+    "dev:worker": "npm run dev --workspace @clipforge/worker",
+    "build": "npm run build --workspace @clipforge/web",
+    "start": "npm run start --workspace @clipforge/web",
+    "start:worker": "npm run start --workspace @clipforge/worker",
+    "migrate": "tsx scripts/migrate.ts",
+    "make-admin": "tsx scripts/make-admin.ts",
+    "test": "vitest run",
+    "test:acceptance": "tsx scripts/acceptance.ts",
+    "typecheck": "tsc -p packages/core && tsc -p apps/worker && tsc -p apps/web --noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "22.10.2",
+    "dotenv": "16.4.7",
+    "tsx": "4.19.2",
+    "typescript": "5.7.2",
+    "vitest": "2.1.8"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "overrides": {
+    "postcss": "8.5.32"
+  }
+}

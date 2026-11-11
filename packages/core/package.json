@@ -1,0 +1,30 @@
+{
+  "name": "@clipforge/core",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./plan": "./src/plan.ts",
+    "./format": "./src/format.ts",
+    "./limits": "./src/limits.ts",
+    "./db": "./src/db.ts",
+    "./config": "./src/config.ts",
+    "./storage": "./src/storage.ts",
+    "./queue": "./src/queue.ts",
+    "./ssrf": "./src/ssrf.ts",
+    "./signing": "./src/signing.ts",
+    "./ratelimit": "./src/ratelimit.ts",
+    "./types": "./src/types.ts"
+  },
+  "dependencies": {
+    "@aws-sdk/client-s3": "3.1167.0",
+    "@aws-sdk/s3-request-presigner": "3.1167.0",
+    "bullmq": "5.34.0",
+    "ioredis": "5.4.1",
+    "pg": "8.13.1",
+    "undici": "7.30.2"
+  },
+  "devDependencies": {
+    "@types/pg": "8.11.10"
+  }
+}
