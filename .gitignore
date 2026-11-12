@@ -6,3 +6,4 @@ data/
 *.tsbuildinfo
 test-output/
 next-env.d.ts
+dump.rdb
