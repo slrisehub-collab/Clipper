@@ -1,5 +1,6 @@
 # Self-hosted ClipForge: everything free and open source.
-#   cp .env.example .env   (set SIGNING_SECRET, APP_URL)
+# Easiest: run deploy/install.sh on a fresh Ubuntu/Debian server. Manually:
+#   cp .env.example .env   (set SIGNING_SECRET, APP_URL, SITE_ADDRESS)
 #   docker compose up -d --build
 #   docker compose run --rm web npm run migrate
 services:
@@ -28,7 +29,7 @@ services:
       REDIS_URL: redis://redis:6379
       STORAGE_DIR: /data/storage
       WORK_DIR: /data/tmp
-    ports: ["3000:3000"]
+    expose: ["3000"]
     volumes: [media:/data]
     depends_on:
       postgres: { condition: service_healthy }
@@ -50,7 +51,19 @@ services:
       redis: { condition: service_started }
     stop_grace_period: 2m
 
+  caddy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    environment:
+      SITE_ADDRESS: ${SITE_ADDRESS:-:80}
+    ports: ["80:80", "443:443"]
+    volumes:
+      - ./deploy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddydata:/data
+    depends_on: [web]
+
 volumes:
+  caddydata:
   pgdata:
   redisdata:
   media:

@@ -1,0 +1,11 @@
+# SITE_ADDRESS is a domain (automatic HTTPS via Let's Encrypt) or ":80" for plain HTTP on the server's IP.
+{$SITE_ADDRESS} {
+	encode zstd gzip
+	reverse_proxy web:3000 {
+		# Uploads and downloads can be large and slow; don't cut them off.
+		transport http {
+			read_timeout 30m
+			write_timeout 30m
+		}
+	}
+}

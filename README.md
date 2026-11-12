@@ -74,18 +74,29 @@ npm run make-admin -- you@example.com
 
 ## Deploying for free
 
-### Option A: one server with Docker Compose (simplest)
+### Option A: one server, one command (recommended)
 
-Any VPS works, including free-tier cloud VMs. Everything (Postgres, Redis, web, worker, files) runs on the one machine.
+Any Ubuntu 22.04+ or Debian 12 server works, including a free cloud VM (x86 or ARM). Everything runs on that one machine: PostgreSQL, Redis, the web app, the FFmpeg worker, and Caddy for HTTPS.
 
-```bash
-cp .env.example .env    # set SIGNING_SECRET and APP_URL=https://your-domain
-docker compose up -d --build
-docker compose run --rm web npm run migrate
-docker compose run --rm web npm run make-admin -- you@example.com
-```
+1. Create the server and SSH in.
+2. If you have a domain, point its DNS `A` record at the server's public IP.
+3. Run:
 
-Put a reverse proxy (Caddy or Nginx) in front for HTTPS. If you use Nginx, raise `client_max_body_size` above the upload part size (8 MB by default; larger files use larger parts, see `apps/web/app/api/uploads/route.ts`).
+   ```bash
+   # with a domain (automatic HTTPS):
+   curl -fsSL https://raw.githubusercontent.com/slrisehub-collab/Clipper/claude/clipforge-platform-0o3kxw/deploy/install.sh | sudo DOMAIN=clips.example.com bash
+
+   # without a domain (plain HTTP on the server's IP):
+   curl -fsSL https://raw.githubusercontent.com/slrisehub-collab/Clipper/claude/clipforge-platform-0o3kxw/deploy/install.sh | sudo bash
+   ```
+
+4. Open the address it prints, register, then make yourself an admin:
+
+   ```bash
+   cd /opt/clipforge && sudo docker compose run --rm web npm run make-admin -- you@example.com
+   ```
+
+The script installs Docker, adds swap on small machines, opens ports 80 and 443 in the local firewall, generates secrets, builds the containers and runs the database migrations. Run it again at any time to update; your data is kept. You still need to allow ports 80 and 443 in your cloud provider's own firewall (on Oracle Cloud, the VCN security list).
 
 ### Option B: split hosting
 
