@@ -4,7 +4,8 @@ import { buttonClass } from './styles';
 import { currentUser } from '@/lib/auth';
 
 export async function SiteHeader() {
-  const user = await currentUser();
+  // The public pages must still render if the database is unreachable or not configured yet.
+  const user = await currentUser().catch(() => null);
   return (
     <header className="sticky top-0 z-40 border-b border-white/[0.06] bg-ink-900/80 backdrop-blur-md">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-4 sm:px-6">

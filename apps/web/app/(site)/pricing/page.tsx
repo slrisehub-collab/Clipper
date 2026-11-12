@@ -7,7 +7,7 @@ export const metadata: Metadata = { title: 'Pricing' };
 export const dynamic = 'force-dynamic';
 
 export default async function PricingPage() {
-  const [plans, user] = await Promise.all([loadPlans(), currentUser()]);
+  const [plans, user] = await Promise.all([loadPlans(), currentUser().catch(() => null)]);
   return (
     <div className="mx-auto max-w-4xl px-4 py-16 sm:px-6 sm:py-20">
       <h1 className="text-3xl font-semibold tracking-tight text-mist-50">Pricing</h1>

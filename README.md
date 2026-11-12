@@ -100,7 +100,7 @@ The script installs Docker, adds swap on small machines, opens ports 80 and 443 
 
 ### Option B: split hosting
 
-- **Web:** Vercel, Netlify or any Node host. Set `STORAGE_DRIVER=s3`.
+- **Web:** Vercel, Netlify or any Node host. On Vercel, set **Root Directory** to `apps/web` (Project Settings → Build and Deployment); building from the repository root fails because the app lives in that folder. Set `STORAGE_DRIVER=s3` and the variables from `.env.example` in the project's Environment Variables.
 - **Database:** any hosted PostgreSQL with a free tier (set `DATABASE_SSL=true` if it requires TLS).
 - **Redis:** any Redis 6+ instance reachable by both web and worker. BullMQ polls Redis continuously, so per-command-priced Redis plans can run out quickly; a small self-hosted Redis next to the worker is the safest choice.
 - **Storage:** an S3-compatible bucket (Cloudflare R2, Backblaze B2, MinIO). Configure CORS so the browser can upload parts directly:
