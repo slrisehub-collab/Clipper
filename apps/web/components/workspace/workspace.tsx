@@ -348,7 +348,7 @@ export function Workspace({ limits, initialVideo }: { limits: PlanLimits; initia
   );
 }
 
-function StepTitle({ n, title, description }: { n: number; title: string; description?: string | null }) {
+export function StepTitle({ n, title, description }: { n: number; title: string; description?: string | null }) {
   return (
     <div className="flex items-start gap-3">
       <span className="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-volt-400/15 font-mono text-[12px] font-semibold text-volt-300">{n}</span>
@@ -360,7 +360,7 @@ function StepTitle({ n, title, description }: { n: number; title: string; descri
   );
 }
 
-function Field({ label, hint, children }: { label: string; hint?: string; children: React.ReactNode }) {
+export function Field({ label, hint, children }: { label: string; hint?: string; children: React.ReactNode }) {
   return (
     <div>
       <div className="mb-2 text-[13px] font-medium text-mist-200">{label}</div>
@@ -370,7 +370,7 @@ function Field({ label, hint, children }: { label: string; hint?: string; childr
   );
 }
 
-function DurationPicker({ label, presets, value, unit, onValue, onUnit }: {
+export function DurationPicker({ label, presets, value, unit, onValue, onUnit }: {
   label: string; presets: number[]; value: string; unit: Unit; onValue: (v: string) => void; onUnit: (u: Unit) => void;
 }) {
   const seconds = Number(value) * (unit === 'min' ? 60 : 1);
@@ -406,7 +406,7 @@ function DurationPicker({ label, presets, value, unit, onValue, onUnit }: {
   );
 }
 
-function TimeField({ label, value, onChange, onNow }: { label: string; value: string; onChange: (v: string) => void; onNow: () => void }) {
+export function TimeField({ label, value, onChange, onNow }: { label: string; value: string; onChange: (v: string) => void; onNow: () => void }) {
   const invalid = value.trim() !== '' && Number.isNaN(parseTimestamp(value));
   return (
     <div className="min-w-[120px] flex-1">

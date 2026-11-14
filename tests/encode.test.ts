@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { buildClipArgs, nearestKeyframe, snapToKeyframes, startsOnKeyframe, videoFilter } from '../apps/worker/src/encode';
+import { buildClipArgs, nearestKeyframe, snapToKeyframes, startsOnKeyframe, videoFilter } from '../packages/core/src/encode';
 
 const cfg = { method: 'duration', segmentSeconds: 60, format: 'mp4', quality: 'original', aspect: 'original', aspectMode: 'crop', keepAudio: true, cutMode: 'precise' } as const;
 const src = { width: 1920, height: 1080, hasAudio: true };

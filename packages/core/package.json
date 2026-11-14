@@ -5,6 +5,7 @@
   "type": "module",
   "exports": {
     "./plan": "./src/plan.ts",
+    "./encode": "./src/encode.ts",
     "./format": "./src/format.ts",
     "./limits": "./src/limits.ts",
     "./db": "./src/db.ts",

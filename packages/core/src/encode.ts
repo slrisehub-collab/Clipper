@@ -1,5 +1,5 @@
 // Builds FFmpeg arguments for a single clip. Pure, so it can be unit tested.
-import { outputSize, type ClipConfig, type Segment } from '@clipforge/core/plan';
+import { outputSize, type ClipConfig, type Segment } from './plan';
 
 export interface SourceInfo {
   width: number;
@@ -28,8 +28,10 @@ export function buildClipArgs(opts: {
   cfg: ClipConfig;
   src: SourceInfo;
   copy: boolean;
+  /** x264 speed preset; the browser build uses 'ultrafast' because it is single-threaded */
+  preset?: string;
 }): string[] {
-  const { input, output, segment, cfg, src, copy } = opts;
+  const { input, output, segment, cfg, src, copy, preset = 'veryfast' } = opts;
   const dur = Math.max(0.001, segment.end - segment.start);
   const args = ['-ss', segment.start.toFixed(3), '-i', input, '-t', dur.toFixed(3), '-map', '0:v:0'];
   const audio = cfg.keepAudio && src.hasAudio;
@@ -42,7 +44,7 @@ export function buildClipArgs(opts: {
   } else {
     args.push('-vf', videoFilter(cfg, src));
     if (cfg.format === 'mp4') {
-      args.push('-c:v', 'libx264', '-preset', 'veryfast', '-crf', cfg.quality === 'original' ? '18' : '20', '-pix_fmt', 'yuv420p', '-profile:v', 'high');
+      args.push('-c:v', 'libx264', '-preset', preset, '-crf', cfg.quality === 'original' ? '18' : '20', '-pix_fmt', 'yuv420p', '-profile:v', 'high');
       if (audio) args.push('-c:a', 'aac', '-b:a', '160k', '-ac', '2');
     } else {
       args.push('-c:v', 'libvpx-vp9', '-b:v', '0', '-crf', cfg.quality === 'original' ? '30' : '33', '-deadline', 'realtime', '-cpu-used', '8', '-row-mt', '1', '-pix_fmt', 'yuv420p');

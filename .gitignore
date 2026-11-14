@@ -7,3 +7,4 @@ data/
 test-output/
 next-env.d.ts
 dump.rdb
+apps/web/public/ffmpeg/

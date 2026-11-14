@@ -5,6 +5,7 @@ import {
 import { buttonClass } from '@/components/styles';
 import { PricingCards } from '@/components/pricing-cards';
 import { loadPlans } from '@/lib/plans';
+import { serverMode } from '@/lib/mode';
 
 export const dynamic = 'force-dynamic';
 
@@ -70,6 +71,7 @@ const faqs = [
 
 export default async function LandingPage() {
   const plans = await loadPlans();
+  const start = serverMode() ? '/app/new' : '/clip';
   return (
     <>
       <section className="relative overflow-hidden border-b border-white/[0.06]">
@@ -86,10 +88,10 @@ export default async function LandingPage() {
               Upload a video or paste a supported video link. Choose your preferred duration and let ClipForge automatically split your video into ready-to-download clips.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <Link href="/app/new" className={buttonClass('primary', 'lg')}>Start Clipping <ArrowRight className="h-4 w-4" /></Link>
+              <Link href={start} className={buttonClass('primary', 'lg')}>Start Clipping <ArrowRight className="h-4 w-4" /></Link>
               <Link href="#how-it-works" className={buttonClass('outline', 'lg')}>Explore How It Works</Link>
             </div>
-            <p className="mt-4 text-[13px] text-mist-500">Free plan available. No card required.</p>
+            <p className="mt-4 text-[13px] text-mist-500">{serverMode() ? 'Free plan available. No card required.' : 'Free. No sign-up. Your video stays on your device.'}</p>
           </div>
           <HeroVisual />
         </div>
@@ -162,7 +164,7 @@ export default async function LandingPage() {
         <div className="mx-auto max-w-6xl px-4 py-20 sm:px-6">
           <h2 className="text-2xl font-semibold tracking-tight text-mist-50 sm:text-3xl">Pricing</h2>
           <p className="mt-2 max-w-xl text-mist-300">Start free. Move to Pro when you need longer videos and more processing time.</p>
-          <div className="mt-10"><PricingCards plans={plans} /></div>
+          {plans.length ? <div className="mt-10"><PricingCards plans={plans} /></div> : <p className="mt-6 text-mist-300">Clipping in your browser is free. Accounts with saved projects and server processing come with the hosted version.</p>}
         </div>
       </section>
 
@@ -183,7 +185,7 @@ export default async function LandingPage() {
           <div className="mt-12 rounded-2xl border border-volt-400/20 bg-gradient-to-br from-volt-400/[0.08] to-transparent p-8 text-center">
             <h3 className="text-xl font-semibold text-mist-50">Ready to split your first video?</h3>
             <p className="mt-2 text-mist-300">It takes about a minute to set up.</p>
-            <Link href="/app/new" className={buttonClass('primary', 'lg', 'mt-6')}>Start Clipping <ArrowRight className="h-4 w-4" /></Link>
+            <Link href={start} className={buttonClass('primary', 'lg', 'mt-6')}>Start Clipping <ArrowRight className="h-4 w-4" /></Link>
           </div>
         </div>
       </section>

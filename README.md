@@ -17,6 +17,12 @@ Everything in the stack is free and open source. There is no Supabase, Firebase 
 - **Admin panel.** Users (suspend, change plan, promote), jobs across all users (with cancel), queue depth, storage totals, error log, processing performance, and editable plan limits.
 - **Plans.** Free and Pro limits (video length, monthly processing minutes, storage, upload size, clips per job, queue priority, batch downloads) are enforced server-side. No payment provider is connected; the `subscriptions` table is ready for one.
 
+## Two modes
+
+**Browser mode (no server needed).** If `DATABASE_URL` is not set, the site runs as a free tool at `/clip`: FFmpeg compiled to WebAssembly runs inside the visitor's browser, so the video never leaves their device and no database, queue, storage or worker is needed. Deploy it to Vercel (Root Directory `apps/web`, no environment variables) and it works straight away. Fast mode stream-copies and is quick (four clips from a 2-minute 720p video in about 6 seconds in testing); Precise mode re-encodes at roughly real time, so long videos take a while. Clips exist only in that browser tab until downloaded, and there are no accounts.
+
+**Server mode (full platform).** Set `DATABASE_URL` and the rest of `.env.example`, run the worker, and you get accounts, saved projects, resumable uploads, URL import, background processing, share links, plans and the admin panel described below.
+
 ## Honest limitations
 
 - **Social media links are refused on purpose.** YouTube, TikTok, Instagram, Facebook, X, Vimeo, Twitch, Dailymotion and streaming services don't permit third-party downloads, and ClipForge doesn't scrape or bypass them. Users get a clear message telling them to upload their own file. Direct links to video files (e.g. `https://example.com/talk.mp4`) work. HLS/DASH playlists are not supported.

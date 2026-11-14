@@ -8,7 +8,7 @@ import { addProcessingSeconds } from '@clipforge/core/limits';
 import { needsTransform, outputSize, type Segment } from '@clipforge/core/plan';
 import type { JobRow, VideoRow } from '@clipforge/core/types';
 import { ffmpegWithProgress, keyframes, probe, thumbnail, FfmpegError } from './ffmpeg';
-import { buildClipArgs, snapToKeyframes, startsOnKeyframe } from './encode';
+import { buildClipArgs, snapToKeyframes, startsOnKeyframe } from '@clipforge/core/encode';
 
 /** Running FFmpeg processes by job id, so a cancel message can stop them immediately. */
 export const running = new Map<string, ChildProcess>();
